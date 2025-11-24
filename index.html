@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Video Player</title>
+  <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet" />
+  <link href="/custom-controls.css" rel="stylesheet" />
+</head>
+<body>
+  <video
+    id="my-video"
+    class="video-js vjs-default-skin"
+    controls
+    preload="auto"
+    width="960"
+    height="540"
+    data-setup="{}"
+  >
+    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+  </video>
+
+  <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+  <script src="/custom-controls.js"></script>
+  <script>
+    const player = videojs('my-video');
+    player.customControls({
+      iconBasePath: '/img/icon',
+      log: true
+    });
+  </script>
+</body>
+</html>
