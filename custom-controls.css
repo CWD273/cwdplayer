@@ -1,0 +1,63 @@
+.vjs-control .vjs-icon-svg {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.vjs-custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+
+.vjs-big-button-svg {
+  width: 64px;
+  height: 64px;
+  fill: currentColor;
+}
+
+.vjs-settings-menu {
+  position: absolute;
+  bottom: 48px; /* above controlbar */
+  right: 16px;
+  min-width: 180px;
+  background: rgba(20,20,20,0.95);
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.vjs-settings-menu.hidden {
+  display: none;
+}
+
+.vjs-settings-menu h6 {
+  margin: 6px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.vjs-settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.vjs-settings-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Hide default Video.js icon fonts we replace */
+.vjs-control .vjs-icon-placeholder {
+  display: none !impo
+rtant;
+}
