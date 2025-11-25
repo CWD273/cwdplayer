@@ -38,12 +38,7 @@
 <body>
   <div id="player-container">
     <div id="loading-overlay">Loading video…</div>
-    <video
-      id="my-video"
-      class="video-js"
-      preload="auto"
-      playsinline
-    ></video>
+    <video id="my-video" class="video-js" playsinline></video>
   </div>
 
   <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
@@ -66,20 +61,26 @@
     const srcUrl = getVideoUrl();
     const type = detectType(srcUrl);
 
+    // Initialize player with source immediately
     const player = videojs('my-video', {
-      controls: false, // hide default controls
+      controls: false,
       autoplay: false,
       preload: 'auto',
-      fluid: true, // fit window responsively
+      fluid: true,
       sources: [{ src: srcUrl, type }]
     });
 
+    // Show overlay until the video has loaded enough to display a frame
+    player.on('loadeddata', () => {
+      document.getElementById('loading-overlay').style.display = 'none';
+    });
+
+    // Initialize custom controls once player is ready
     player.ready(() => {
       player.customControls({
         iconBasePath: '/img/icon',
         log: true
       });
-      document.getElementById('loading-overlay').style.display = 'none';
     });
   </script>
 </body>
