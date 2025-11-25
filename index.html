@@ -2,30 +2,84 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Video Player</title>
+  <title>Custom Video.js Wrapper</title>
   <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet" />
   <link href="/custom-controls.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #000;
+    }
+    #player-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    #loading-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: #fff;
+      font-size: 1.5em;
+      z-index: 1000;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
-  <video
-    id="my-video"
-    class="video-js vjs-default-skin"
-    controls
-    preload="auto"
-    width="960"
-    height="540"
-    data-setup="{}"
-  >
-    <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
-  </video>
+  <div id="player-container">
+    <div id="loading-overlay">Loading video…</div>
+    <video
+      id="my-video"
+      class="video-js"
+      preload="auto"
+      playsinline
+    ></video>
+  </div>
 
   <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
   <script src="/custom-controls.js"></script>
   <script>
-    const player = videojs('my-video');
-    player.customControls({
-      iconBasePath: '/img/icon',
-      log: true
+    // --- Detect ?url parameter ---
+    function getVideoUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('url') || 'https://vjs.zencdn.net/v/oceans.mp4';
+    }
+
+    function detectType(url) {
+      const ext = url.split('.').pop().toLowerCase();
+      if (ext === 'mp4') return 'video/mp4';
+      if (ext === 'webm') return 'video/webm';
+      if (ext === 'ogg' || ext === 'ogv') return 'video/ogg';
+      return 'video/mp4'; // fallback
+    }
+
+    const srcUrl = getVideoUrl();
+    const type = detectType(srcUrl);
+
+    const player = videojs('my-video', {
+      controls: false, // hide default controls
+      autoplay: false,
+      preload: 'auto',
+      fluid: true, // fit window responsively
+      sources: [{ src: srcUrl, type }]
+    });
+
+    player.ready(() => {
+      player.customControls({
+        iconBasePath: '/img/icon',
+        log: true
+      });
+      document.getElementById('loading-overlay').style.display = 'none';
     });
   </script>
 </body>
